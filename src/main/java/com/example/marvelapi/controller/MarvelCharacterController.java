@@ -2,50 +2,78 @@
 package com.example.marvelapi.controller;
 
 import com.example.marvelapi.entity.MarvelCharacter;
-import com.example.marvelapi.repository.MarvelCharacterRepository;
+import com.example.marvelapi.service.MarvelCharacterService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/characters")
 public class MarvelCharacterController {
 
-    private final MarvelCharacterRepository repository;
+    private final MarvelCharacterService service;
 
-    public MarvelCharacterController(MarvelCharacterRepository repository) {
-        this.repository = repository;
+    public MarvelCharacterController(MarvelCharacterService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public List<MarvelCharacter> getAllCharacters() {
-        return repository.findAll();
+    public List<MarvelCharacter> getAllCharacters(
+            @RequestParam(required = false) String name) {
+
+        List<MarvelCharacter> characters = service.getAllCharacters();
+
+        if (name != null && !name.isBlank()) {
+            return characters.stream()
+                    .filter(character -> character.getName()
+                            .toLowerCase()
+                            .contains(name.toLowerCase()))
+                    .toList();
+        }
+
+        return characters;
     }
 
     @GetMapping("/{id}")
-    public MarvelCharacter getCharacterById(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
+    public ResponseEntity<MarvelCharacter> getCharacterById(
+            @PathVariable Long id) {
+
+        return service.getCharacterById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public MarvelCharacter addCharacter(@RequestBody MarvelCharacter character) {
-        return repository.save(character);
+    public ResponseEntity<MarvelCharacter> addCharacter(
+            @Valid @RequestBody MarvelCharacter character) {
+
+        MarvelCharacter saved = service.createCharacter(character);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public MarvelCharacter updateCharacter(
+    public ResponseEntity<MarvelCharacter> updateCharacter(
             @PathVariable Long id,
-            @RequestBody MarvelCharacter updatedCharacter) {
+            @Valid @RequestBody MarvelCharacter updatedCharacter) {
 
-        return repository.findById(id).map(character -> {
-            character.setName(updatedCharacter.getName());
-            character.setAlias(updatedCharacter.getAlias());
-            character.setDescription(updatedCharacter.getDescription());
-            return repository.save(character);
-        }).orElse(null);
+        return service.updateCharacter(id, updatedCharacter)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCharacter(@PathVariable Long id) {
-        repository.deleteById(id);
+    public ResponseEntity<Void> deleteCharacter(
+            @PathVariable Long id) {
+
+        if (service.deleteCharacter(id)) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 }
