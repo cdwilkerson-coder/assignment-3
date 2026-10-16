@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class MarvelCharacter {
@@ -13,9 +14,15 @@ public class MarvelCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
     private String name;
+
     private String alias;
+
+    @NotBlank(message = "Description is required")
     private String description;
+
+    private String universe;
 
     public MarvelCharacter() {
     }
@@ -51,4 +58,12 @@ public class MarvelCharacter {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getUniverse() {
+    return universe;
+}
+
+public void setUniverse(String universe) {
+    this.universe = universe;
+}
 }

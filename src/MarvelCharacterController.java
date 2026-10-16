@@ -21,22 +21,31 @@ public class MarvelCharacterController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<MarvelCharacter> getAllCharacters(
-            @RequestParam(required = false) String name) {
+    
+@GetMapping
+public List<MarvelCharacter> getAllCharacters(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String universe) {
 
-        List<MarvelCharacter> characters = service.getAllCharacters();
+    List<MarvelCharacter> characters = service.getAllCharacters();
 
-        if (name != null && !name.isBlank()) {
-            return characters.stream()
-                    .filter(character -> character.getName()
-                            .toLowerCase()
-                            .contains(name.toLowerCase()))
-                    .toList();
-        }
-
-        return characters;
+    if (name != null && !name.isBlank()) {
+        characters = characters.stream()
+            .filter(character -> character.getName()
+                .toLowerCase().contains(name.toLowerCase()))
+            .toList();
     }
+
+    if (universe != null && !universe.isBlank()) {
+        characters = characters.stream()
+            .filter(character -> character.getUniverse() != null
+                && character.getUniverse().equalsIgnoreCase(universe))
+            .toList();
+    }
+
+    return characters;
+}
+
 
     @GetMapping("/{id}")
     public ResponseEntity<MarvelCharacter> getCharacterById(
