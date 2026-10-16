@@ -84,4 +84,8 @@ The application uses a multi-stage Dockerfile to build the Spring Boot project a
 
 The API is deployed as a Render Web Service connected to the project's GitHub repository.
 
-## De
+## Deployed Application
+
+**Public API URL:** https://assignment-3-uglu.onrender.com
+
+**Get All Characters:** https://assignment-3-uglu.onrender.com/api/characters
