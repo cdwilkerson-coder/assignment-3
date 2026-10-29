@@ -24,6 +24,8 @@ public class MarvelCharacter {
 
     private String universe;
 
+    private String imageUrl;
+
     public MarvelCharacter() {
     }
 
@@ -60,10 +62,19 @@ public class MarvelCharacter {
     }
 
     public String getUniverse() {
-    return universe;
-}
+        return universe;
+    }
 
-public void setUniverse(String universe) {
-    this.universe = universe;
-}
+    public void setUniverse(String universe) {
+        this.universe = universe;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 }
