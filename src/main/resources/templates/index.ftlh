@@ -1,4 +1,4 @@
-
+<#import "/fragments/navbar.ftlh" as layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
