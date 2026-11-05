@@ -1,10 +1,17 @@
 # Marvel Character Gallery Web Application
 
+**Student:** Cameron Wilkerson  
 **Course:** CSC 340 – Software Engineering  
 **Assignment:** Assignment 4 – Character Gallery Web App  
 **Track:** Track A – FreeMarker MVC  
-**Student:** Cameron Wilkerson
 
+## Project Links
+
+**Live Website:** https://assignment-3-uglu.onrender.com/
+
+**GitHub Repository:** https://github.com/cdwilkerson-coder/assignment-3
+
+**REST API:** https://assignment-3-uglu.onrender.com/api/characters
 ## Project Overview
 
 Marvel Character Gallery is a full-stack web application developed using Java, Spring Boot, FreeMarker, Spring Data JPA, and PostgreSQL.
