@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -20,10 +21,12 @@ public class MarvelCharacter {
     private String alias;
 
     @NotBlank(message = "Description is required")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String universe;
 
+    @Column(name = "image_url", length = 2000)
     private String imageUrl;
 
     public MarvelCharacter() {
@@ -76,5 +79,4 @@ public class MarvelCharacter {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
 }

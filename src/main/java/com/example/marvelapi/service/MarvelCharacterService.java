@@ -36,6 +36,9 @@ public class MarvelCharacterService {
             character.setName(updatedCharacter.getName());
             character.setDescription(updatedCharacter.getDescription());
             character.setAlias(updatedCharacter.getAlias());
+            character.setUniverse(updatedCharacter.getUniverse());
+            character.setImageUrl(updatedCharacter.getImageUrl());
+
             return repository.save(character);
         });
     }
@@ -49,4 +52,3 @@ public class MarvelCharacterService {
         return true;
     }
 }
-
